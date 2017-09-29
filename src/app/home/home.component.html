@@ -1,0 +1,35 @@
+<div *ngIf="!name; else formInfo">
+  <form [formGroup]="rform" (ngSubmit)="addPost(rform.value)">
+    <div class="form-container">
+      <div class="row columns">
+        <h1>Reactive Form</h1>
+        <label>Name
+
+          <input type="text" formControlName="name">
+        </label>
+        <div class="alert" *ngIf ="!rform.controls['name'].valid">This Field is required</div>
+        <label>Description
+
+                      <textarea formControlName="description"></textarea>
+                    </label>
+                    <div class="alert" *ngIf ="!rform.controls['description'].valid">min character length 30 required</div>
+
+        <input type="submit" class="button expanded" value="submit Form" [disabled]="!rform.valid">
+      </div>
+
+    </div>
+  </form>
+</div>
+
+
+
+
+<ng-template #formInfo>
+  <div class="form-container">
+    <div class="row columns">
+      <h1>{{name}}</h1>
+      <p>{{description}}</p>
+    </div>
+  </div>
+
+</ng-template>
