@@ -8,11 +8,11 @@
           <input type="text" formControlName="name">
         </label>
         <div class="alert" *ngIf ="!rform.controls['name'].valid">This Field is required</div>
-        <label>Description
+        <label>job
 
-                      <textarea formControlName="description"></textarea>
+                      <textarea formControlName="job"></textarea>
                     </label>
-                    <div class="alert" *ngIf ="!rform.controls['description'].valid">min character length 30 required</div>
+                    <div class="alert" *ngIf ="!rform.controls['job'].valid">min character length 30 required</div>
 
         <input type="submit" class="button expanded" value="submit Form" [disabled]="!rform.valid">
       </div>
@@ -21,15 +21,18 @@
   </form>
 </div>
 
-
-
-
 <ng-template #formInfo>
-  <div class="form-container">
+
+
+  <div class="form-container" *ngIf="user">
     <div class="row columns">
-      <h1>{{name}}</h1>
-      <p>{{description}}</p>
+      <h3 class="subheader">ID : {{user.id}}</h3>
+      <h3 class="subheader">Created At : {{user.createdAt}}</h3>
+      <h3 class="subheader">User Name : {{user.name}}</h3>
+      <h3 class="subheader">JOb Description : {{user.job}}</h3>
     </div>
   </div>
-
+  <div style="margin-left:50%; margin-top:20%">
+      <i *ngIf="!user" class="fa fa-spinner fa-spin fa-4x" aria-hidden="true"></i>
+      </div>
 </ng-template>
