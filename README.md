@@ -1,28 +1,97 @@
-# Crud1
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.3.2.
 
-## Development server
+Angular Reactive Form
+---------------------
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+**USAGE**
 
-## Code scaffolding
+> *app.module.ts*
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-## Build
+    imports: [
+	        FormsModule,
+	        ReactiveFormsModule]
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+> new.component.ts
 
-## Running unit tests
+    import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+      constructor(private fb: FormBuilder) {
+        this.rform = fb.group({
+          'name': [null, Validators.required],
+		  'job': [null,
+		  Validators.compose([Validators.required, Validators.minLength(30)])],
+        })
+      }
 
-## Further help
+> HTML
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+       <div *ngIf="!name">
+      <form [formGroup]="rform" (ngSubmit)="addPost(rform.value)">
+        <div class="form-container">
+          <div class="row columns">
+            <h1>Reactive Form</h1>
+            <label>Name
+    
+           <input type="text" formControlName="name">
+            </label>
+    	      <div class="alert" *ngIf="!rform.controls['name'].valid">This Field is required</div>
+            <label>job
+    
+              <textarea formControlName="job"></textarea>
+            </label>
+            <div class="alert" *ngIf="!rform.controls['job'].valid">min character length 30 required</div>
+    
+            <input type="submit" class="button expanded" value="submit Form" [disabled]="!rform.valid">
+          </div>
+    
+        </div>
+      </form>
+    </div>
+
+
+> css
+
+        .form-container {
+      display:block;
+      width:90%;
+      padding:2em;
+      margin: 2em auto;
+      background:#fff;
+    }
+    
+    .alert {
+      background: #f2edda;
+      padding: 7px;
+      font-size: .9em;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: 2s alertAnim forwards;
+    }
+    
+    .button {
+      margin-top: 3rem;
+    }
+    h1 {
+      margin-bottom: 2rem;
+      font-weight:bold;
+      font-family:'Muli';
+      font-size: 2em;
+    }
+    
+    
+    @keyframes alertAnim {
+      from {
+          opacity:0;
+          transform: translateY(-20px);
+      }
+      to {
+          opacity:1;
+          transform: translateY(0);
+      }
+    }
+
+
